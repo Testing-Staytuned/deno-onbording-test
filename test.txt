@@ -1,2 +1,29 @@
-1
-2
+    ->make a page with the meaningful classname(id) of button
+onclick of that button call the function to go to email varify
+
+    ->input email
+        send email to backend and code
+            if code is correct
+                go to next page
+            else
+                show error
+
+    ->make basic form for recruiting developers(according to the choice of applied job button).
+        backend->on submit send email to user
+        and also create github issue in the repo of the project of organization
+
+    ->backend->oncomment notify the user thorugh email about the comment regarding the interview
+
+    ->backend->oncomment notify the user thorugh email regarding selection or rejection
+
+        ->onreject send email to user
+
+        ->onaccept send email to user and fill the form for the user (more details)
+
+            ->onsubmit of form send email to user and also add to the team according to role in the repo of the project of organization (make a folder of user and add the data into it)
+
+               ->after role selection create a issue for selected candidate in the repo of the project of organization
+            
+            ->email to user about the role and joining date with apointment letter(with in 2 weeks form the date of sending email)
+
+4 html pages

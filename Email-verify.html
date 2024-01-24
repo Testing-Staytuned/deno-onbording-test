@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      margin-top: 10px;
+      display: block;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <title>Email Verification</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Email Verification</h2>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <button onclick="sendVerification()">Send Verification Code</button>
+    <label for="verificationCode">Verification Code:</label>
+    <input type="text" id="verificationCode" name="verificationCode" required>
+    <button onclick="verifyEmail()">Verify Email</button>
+  </div>
+
+  <script>
+    function sendVerification() {
+      const email = document.getElementById('email').value;
+
+      if (email) {
+        // Simulate server-side email verification
+        alert(`Verification code sent to ${email}`);
+      } else {
+        alert('Please enter your email.');
+      }
+    }
+
+    function verifyEmail() {
+      const email = document.getElementById('email').value;
+      const verificationCode = document.getElementById('verificationCode').value;
+
+      if (email && verificationCode) {
+        // Simulate server-side verification
+        alert(`Email ${email} verified successfully!`);
+      } else {
+        alert('Please enter your email and verification code.');
+      }
+    }
+  </script>
+</body>
+</html>
