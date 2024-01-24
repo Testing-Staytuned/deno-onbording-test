@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OnBording</title>
+    <script src="b.js"></script>
+    <script type="module">
+      import { mailer } from './b.js';
+      
+      document.getElementById('a').addEventListener('click', function(){
+          mailer('abhikumarparate20@gnu.ac.in', '123456');
+      });
+  </script>
+  
+
   <style>
     body {
   font-family: Arial, sans-serif;
@@ -64,7 +74,6 @@ button:hover {
                 </div>
         </form>
 </div>
-
 <script>
 
     function showVerificationForm() {
@@ -82,7 +91,7 @@ button:hover {
         const verificationCode = document.getElementById('verificationCode').value;
 
         // Perform verification logic (you can send this data to the server for processing)
-
+        // mailer(email, verificationCode);
         // For demonstration purposes, let's display the verified information on the page
         const resultContainer = document.createElement('div');
         resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
@@ -109,8 +118,6 @@ button:hover {
     document.getElementById('verificationForm').reset();
 
 </script>
-<button onclick="alert('hello')">
-  GO TO
-</button>
+<button id="a">gogogog</button>
 </body>
 </html>
