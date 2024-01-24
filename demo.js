@@ -16,3 +16,4 @@ await gmail.users.messages.send({
   userId: 'nirnayraval20@gnu.ac.in',
   resource: message,
 });
+console.log('Message sent!');
