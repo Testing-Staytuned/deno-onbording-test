@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One Page Website</title>
+  <title>OnBording</title>
   <style>
     body {
   font-family: Arial, sans-serif;
@@ -53,47 +53,60 @@ button:hover {
 <button id="applyBtn" onclick="showVerificationForm()">Apply</button>
 
 <div id="formContainer">
-  <form id="verificationForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" required>
-    <!-- add a button for send varification -->
-    <button type="button" onclick="sendVerification()">Send Verification</button>
-    <label for="verificationCode">Verification Code:</label>
-    <input type="text" id="verificationCode" required>
-    <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
-  </form>
+        <form id="verificationForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <button type="button" onclick="sendVerification()">Send Verification</button>
+                <div id="formContainer2" style="display: none;">
+                                <label for="verificationCode">Verification Code:</label>
+                                <input type="text" id="verificationCode" required>
+                                <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
+                </div>
+        </form>
 </div>
 
 <script>
-    // set submit button disabled
-    document.getElementById("submit").disabled = true;
-  function showVerificationForm() {
-    // Hide the apply button
-    document.getElementById('applyBtn').style.display = 'none';
 
-    // Show the verification form
-    document.getElementById('formContainer').style.display = 'block';
-  }
+    function showVerificationForm() {
+        // Hide the apply button
+        document.getElementById('applyBtn').style.display = 'none';
 
-  function submitVerification() {
-    const email = document.getElementById('email').value;
-    const verificationCode = document.getElementById('verificationCode').value;
-
-    // Perform verification logic (you can send this data to the server for processing)
-
-    // For demonstration purposes, let's display the verified information on the page
-    const resultContainer = document.createElement('div');
-    resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
-    document.body.appendChild(resultContainer);
-
-    function sendVerification() {
-    const email = document.getElementById('email').value;
-    // set submit button active
-    document.getElementById("submit").disabled = false;
+        // Show the verification form
+        document.getElementById('formContainer').style.display = 'block';
+        //hide formContainer2 
+        // document.getElementById('formContainer2').style.display = 'block';
     }
-    // Clear the form
+
+    function submitVerification() {
+        const email = document.getElementById('email').value;
+        const verificationCode = document.getElementById('verificationCode').value;
+
+        // Perform verification logic (you can send this data to the server for processing)
+
+        // For demonstration purposes, let's display the verified information on the page
+        const resultContainer = document.createElement('div');
+        resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
+        document.body.appendChild(resultContainer);
+
+        // Clear the form
+    }
+    
+    function sendVerification() {
+        const email = document.getElementById('email').value;
+        //show formContainer2 div
+        document.getElementById('formContainer2').style.display = 'block';
+    }
+    
+    // Add event listener to the apply button
+    document.getElementById('applyBtn').addEventListener('click', showVerificationForm);
+    
+    // Add event listener to the send verification button
+    document.getElementById('sendVerificationBtn').addEventListener('click', sendVerification);
+    
+    // Add event listener to the submit button
+    document.getElementById('submit').addEventListener('click', submitVerification);
+    
     document.getElementById('verificationForm').reset();
-  }
 </script>
 
 </body>
