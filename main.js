@@ -7,7 +7,7 @@ const port = 3000;
 app.use(serveStatic(Deno.cwd()));
 
 // Serve a specific page on a specific URL
-app.use("/Email-verify.html", async (req, res) => {
+app.use("/Email-verify.html", async (_, res) => {
   await sendFile(res, `${Deno.cwd()}/Email-verify.html`);
 });
 
