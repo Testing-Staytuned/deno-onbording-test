@@ -6,11 +6,12 @@ const port = 3000;
 
 // Serve static files (like index.html)
 app.use(serveStatic(Deno.cwd()));
-
+console.log("hi");
 // Serve a specific page on a specific URL
 // app.use("/Email-verify.html", async (req, res) => {
 //   await sendFile(res, `${Deno.cwd()}/Email-verify.html`);
 // });
+console.log("hello");
 app.use(async (req, res, next) => {
   try {
     const url = new URL(`${req.url}`);
@@ -26,3 +27,4 @@ app.use(async (req, res, next) => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+console.log("bye");
