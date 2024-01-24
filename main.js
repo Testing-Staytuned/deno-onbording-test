@@ -13,7 +13,8 @@ app.use(serveStatic(Deno.cwd()));
 // });
 app.use(async (req, res, next) => {
   try {
-    const filePath = `${Deno.cwd()}${req.url.pathname}`;
+    const url = new URL(`http://dummyhost${req.url}`);
+    const filePath = `${Deno.cwd()}${url.pathname}`;
     const fileContent = await Deno.readTextFile(filePath);
 
     res.status(200).type("text/html").send(fileContent);
@@ -23,6 +24,5 @@ app.use(async (req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running`);
+  console.log(`Server is running at http://localhost:${port}`);
 });
-
