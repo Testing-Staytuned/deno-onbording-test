@@ -1,5 +1,5 @@
 import { opine, serveStatic } from "https://deno.land/x/opine/mod.ts";
-import { sendFile } from "https://deno.land/x/sendfile/mod.ts";
+// import { sendFile } from "https://deno.land/x/sendfile/mod.ts";
 
 const app = opine();
 const port = 3000;
@@ -13,7 +13,10 @@ app.use(serveStatic(Deno.cwd()));
 // });
 app.use(async (req, res, next) => {
   try {
-    await sendFile(req, req.url.pathname, { root: Deno.cwd() });
+    const filePath = `${Deno.cwd()}${req.url.pathname}`;
+    const fileContent = await Deno.readTextFile(filePath);
+
+    res.status(200).type("text/html").send(fileContent);
   } catch (error) {
     next(error);
   }
