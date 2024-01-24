@@ -13,7 +13,7 @@ app.use(serveStatic(Deno.cwd()));
 // });
 app.use(async (req, res, next) => {
   try {
-    const url = new URL(`http://dummyhost${req.url}`);
+    const url = new URL(`${req.url}`);
     const filePath = `${Deno.cwd()}${url.pathname}`;
     const fileContent = await Deno.readTextFile(filePath);
 
