@@ -16,7 +16,7 @@ app.use(async (req, res, next) => {
     const url = new URL(`${req.url}`);
     const filePath = `${Deno.cwd()}${url.pathname}`;
     const fileContent = await Deno.readTextFile(filePath);
-
+    console.log("fileContent", fileContent, "filePath", filePath, "url", url);
     res.status(200).type("text/html").send(fileContent);
   } catch (error) {
     next(error);
