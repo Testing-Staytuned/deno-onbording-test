@@ -56,13 +56,17 @@ button:hover {
   <form id="verificationForm">
     <label for="email">Email:</label>
     <input type="email" id="email" required>
+    <!-- add a button for send varification -->
+    <button type="button" onclick="sendVerification()">Send Verification</button>
     <label for="verificationCode">Verification Code:</label>
     <input type="text" id="verificationCode" required>
-    <button type="button" onclick="submitVerification()">Submit Verification</button>
+    <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
   </form>
 </div>
 
 <script>
+    // set submit button disabled
+    document.getElementById("submit").disabled = true;
   function showVerificationForm() {
     // Hide the apply button
     document.getElementById('applyBtn').style.display = 'none';
@@ -82,6 +86,11 @@ button:hover {
     resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
     document.body.appendChild(resultContainer);
 
+    function sendVerification() {
+    const email = document.getElementById('email').value;
+    // set submit button active
+    document.getElementById("submit").disabled = false;
+    }
     // Clear the form
     document.getElementById('verificationForm').reset();
   }
