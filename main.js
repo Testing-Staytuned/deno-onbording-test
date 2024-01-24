@@ -7,10 +7,10 @@ const server = serve({ port: 3000 });
 console.log('Server is running ');
 
 // Listen for incoming requests
-for(const request of server) {
+// for (const request of server) {
   // Serve the index.html file
-  if (request.method === 'GET' && request.url === '/') {
+  // if (request.method === 'GET' && request.url === '/') {
     const html = await Deno.readTextFile('index.html');
     request.respond({ body: html, headers: new Headers({ 'Content-Type': 'text/html' }) });
-  }
-}
+  // }
+// }
