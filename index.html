@@ -46,6 +46,7 @@
         background-color: #45a049;
       }
     </style>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
   </head>
   <body>
     <button id="applyBtn" onclick="showVerificationForm()">Apply</button>
@@ -87,8 +88,17 @@
         const resultContainer = document.createElement("div");
         resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
         document.body.appendChild(resultContainer);
-
-        // Clear the form
+        Email.send({
+          Host: "smtp.gmail.com",
+          Username: "ravalnirnay@gmail.com",
+          Password: "Raval@bc8888",
+          To: email,
+          From:"ravalnirnay@gmail.com",
+          Subject: "This is the subject",
+          Body: "And this is the body",
+        })
+        .then((message) => alert("mail sent successfully"));
+  
       }
 
       function sendVerification() {
@@ -117,7 +127,7 @@
       document.getElementById("verificationForm").reset();
     </script>
 
-<button onclick="runDemo()">Run Demo</button>
-<script src="demo.js"></script>
+<!-- <button onclick="runDemo()">Run Demo</button>
+<script src="demo.js"></script> -->
   </body>
 </html>
