@@ -1,4 +1,5 @@
 import { opine, serveStatic } from "https://deno.land/x/opine/mod.ts";
+import { sendFile } from "https://deno.land/x/sendfile/mod.ts";
 
 const app = opine();
 const port = 3000;
@@ -7,8 +8,15 @@ const port = 3000;
 app.use(serveStatic(Deno.cwd()));
 
 // Serve a specific page on a specific URL
-app.use("/Email-verify.html", async (req, res) => {
-  await sendFile(res, `${Deno.cwd()}/Email-verify.html`);
+// app.use("/Email-verify.html", async (req, res) => {
+//   await sendFile(res, `${Deno.cwd()}/Email-verify.html`);
+// });
+app.use(async (req, res, next) => {
+  try {
+    await sendFile(req, req.url.pathname, { root: Deno.cwd() });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.listen(port, () => {
