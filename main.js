@@ -13,15 +13,21 @@ console.log("hi", Deno.cwd());
 // });
 console.log("hello");
 app.use(async (req, res, next) => {
+  console.log("above try");
   try {
+    console.log("inside try");
     const url = new URL(`${req.url}`);
+    console.log("url", url);
     const filePath = `${Deno.cwd()}${url.pathname}`;
+    console.log("filePath", filePath);
     const fileContent = await Deno.readTextFile(filePath);
+    console.log("hi1");
     console.log("fileContent", fileContent, "filePath", filePath, "url", url);
     res.status(200).type("text/html").send(fileContent);
   } catch (error) {
     next(error);
   }
+  console.log("below try");
 });
 
 app.listen(port, () => {
