@@ -6,6 +6,12 @@
     <title>Demo-OnBording</title>
 </head>
 <body>
-<button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;" id="apply-btn">Apply</button>
+<button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">Apply</button>
+<script>
+    var button = document.querySelector('button');
+    button.onclick = function() {
+        window.location.href = '/email-verify.html';
+    }
+</script>
 </body>
 </html>
