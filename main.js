@@ -25,6 +25,7 @@ app.use(async (req, res, next) => {
     console.log("fileContent", fileContent, "filePath", filePath, "url", url);
     res.status(200).type("text/html").send(fileContent);
   } catch (error) {
+    console.log("error", error);
     next(error);
   }
   console.log("below try");
