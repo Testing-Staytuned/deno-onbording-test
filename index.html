@@ -56,11 +56,11 @@ button:hover {
       <form id="verificationForm">
           <label for="email">Email:</label>
           <input type="email" id="email" required>
-          <button type="button" id="sendVerificationBtn" onclick="sendVerification()">Send Verification</button>
+          <button type="button" id="sendVerificationBtn">Send Verification</button>
           <div id="formContainer2" style="display: none;">
               <label for="verificationCode">Verification Code:</label>
               <input type="text" id="verificationCode" required>
-              <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
+              <button type="button" id="submit">Submit Verification</button>
           </div>
       </form>
   </div>
@@ -68,6 +68,7 @@ button:hover {
   <script>
     const verificationCode = generateVerificationCode();
     function showVerificationForm() {
+      console.log('showVerificationForm');
         document.getElementById('applyBtn').style.display = 'none';
         document.getElementById('formContainer').style.display = 'block';
         
@@ -80,7 +81,7 @@ button:hover {
 
     async function sendVerificationcode() {
   const email = document.getElementById('email').value;
-  const verificationCode = generateVerificationCode();
+  // const verificationCode = generateVerificationCode();
 
   try {
     const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
@@ -99,20 +100,26 @@ button:hover {
 }
     
     async function submitVerification() {
+      console.log('submitVerification');
       const email = document.getElementById('email').value;
       const verificationCode1 = document.getElementById('verificationCode').value;
+      console.log("verification code is: "+verificationCode1);
+      console.log("verification code 2 is: "+verificationCode);
         if(verificationCode1 == verificationCode){
             alert('Verification successful!');
         }
     }
 
     function sendVerification() {
+      console.log('sendVerification');
       sendVerificationcode().then(() => {
         document.getElementById('formContainer2').style.display = 'block';
       });
     }
 
     document.getElementById('applyBtn').addEventListener('click', showVerificationForm);
+    document.getElementById('sendVerificationBtn').addEventListener('click', sendVerification);
+    document.getElementById('submit').addEventListener('click', submitVerification);
 </script>
 </body>
 </html>
