@@ -4,16 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OnBording</title>
-    <script src="b.js"></script>
-    <script type="module">
-      import { mailer } from './b.js';
-      
-      document.getElementById('a').addEventListener('click', function(){
-          mailer('abhikumarparate20@gnu.ac.in', '123456');
-      });
-  </script>
-  
-
   <style>
     body {
   font-family: Arial, sans-serif;
@@ -60,64 +50,67 @@ button:hover {
 </head>
 <body>
 
-<button id="applyBtn" onclick="showVerificationForm()">Apply</button>
-
-<div id="formContainer">
-        <form id="verificationForm">
-                <label for="email">Email:</label>
-                <input type="email" id="email" required>
-                <button type="button" onclick="sendVerification()">Send Verification</button>
-                <div id="formContainer2" style="display: none;">
-                                <label for="verificationCode">Verification Code:</label>
-                                <input type="text" id="verificationCode" required>
-                                <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
-                </div>
-        </form>
-</div>
-<script>
-
+  <button id="applyBtn">Apply</button>
+  
+  <div id="formContainer">
+      <form id="verificationForm">
+          <label for="email">Email:</label>
+          <input type="email" id="email" required>
+          <button type="button" id="sendVerificationBtn" onclick="sendVerification()">Send Verification</button>
+          <div id="formContainer2" style="display: none;">
+              <label for="verificationCode">Verification Code:</label>
+              <input type="text" id="verificationCode" required>
+              <button type="button" onclick="submitVerification()" id="submit">Submit Verification</button>
+          </div>
+      </form>
+  </div>
+  
+  <script>
+    const verificationCode = generateVerificationCode();
     function showVerificationForm() {
-        // Hide the apply button
         document.getElementById('applyBtn').style.display = 'none';
-
-        // Show the verification form
         document.getElementById('formContainer').style.display = 'block';
-        //hide formContainer2 
-        // document.getElementById('formContainer2').style.display = 'block';
+        
+      }
+
+    function generateVerificationCode() {
+      const verificationCode = Math.floor(100000 + Math.random() * 900000);
+      return verificationCode;
     }
 
-    function submitVerification() {
-        const email = document.getElementById('email').value;
-        const verificationCode = document.getElementById('verificationCode').value;
+    async function sendVerificationcode() {
+      const email = document.getElementById('email').value;
+      const response = await fetch(`http://localhost:3000/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
+        const result = await response.json();
 
-        // Perform verification logic (you can send this data to the server for processing)
-        // mailer(email, verificationCode);
-        // For demonstration purposes, let's display the verified information on the page
-        const resultContainer = document.createElement('div');
-        resultContainer.innerHTML = `<p>Email: ${email}</p><p>Verification Code: ${verificationCode}</p>`;
-        document.body.appendChild(resultContainer);
-
-        // Clear the form
+        if (response.ok) {
+            // const resultContainer = document.createElement('div');
+            // resultContainer.innerHTML = `<p>Email: ${result.email}</p><p>Verification Code: ${result.code}</p>`;
+            // document.body.appendChild(resultContainer);
+            alert('code sent!');
+          } else {
+            alert('Error sending verification: ' + result.error);
+          }
     }
     
+    async function submitVerification() {
+      const email = document.getElementById('email').value;
+      const verificationCode1 = document.getElementById('verificationCode').value;
+        if(verificationCode1 == verificationCode){
+            alert('Verification successful!');
+        }
+    }
+
     function sendVerification() {
-        const email = document.getElementById('email').value;
-        //show formContainer2 div
+      sendVerificationcode().then(() => {
         document.getElementById('formContainer2').style.display = 'block';
+      });
+      // document.getElementById('formContainer2').style.display = 'block';
     }
-    
-    // Add event listener to the apply button
-    document.getElementById('applyBtn').addEventListener('click', showVerificationForm);
-    
-    // Add event listener to the send verification button
-    document.getElementById('sendVerificationBtn').addEventListener('click', sendVerification);
-    
-    // Add event listener to the submit button
-    document.getElementById('submit').addEventListener('click', submitVerification);
-    
-    document.getElementById('verificationForm').reset();
 
+    document.getElementById('applyBtn').addEventListener('click', showVerificationForm);
+    // document.getElementById('sendVerificationBtn').addEventListener('click', sendVerification);
+    // document.getElementById('submit').addEventListener('click', submitVerification);
 </script>
-<button id="a">gogogog</button>
 </body>
 </html>
