@@ -1,30 +1,24 @@
-import { opine, serveStatic, applyMiddleware } from "https://deno.land/x/opine/mod.ts";
-import { CorsMiddleware } from "https://deno.land/x/oak_cors/mod.ts"; // Use CorsMiddleware from oak_cors
+import { opine, serveStatic } from "https://deno.land/x/opine/mod.ts";
+// import { opineCors } from "https://deno.land/x/cors/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import mailer from "./mailer.js";
 
 const app = opine();
 const port = 3001;
 
-// Enable CORS for all origins (adjust for production)
-app.use(applyMiddleware(CorsMiddleware()));
-
-// Parse request body
+// Enable CORS (for handling cross-origin requests)
+// app.use(opineCors());
+app.use(oakCors());
 app.use(opine.bodyParser.json());
 
 // Serve static files (like index.html)
 app.use(serveStatic(Deno.cwd()));
 
-// Handle POST requests for sending verification (with authentication)
+// Handle POST requests for sending verification
 app.post("/send-verification", async (req, res) => {
+  const { email, code } = req.query;
   try {
-    // Check for authentication (replace with your logic)
-    if (!isValidAuthentication(req)) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    const { email, code } = req.body; // Access data from parsed request body
-
     const result = await mailer(email, code);
     res.json({ email, code });
   } catch (error) {
