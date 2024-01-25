@@ -10,7 +10,7 @@ app.use(serveStatic(Deno.cwd())); // Serve static files
 app.use(opineCors()); // Enable CORS
 // app.use(json()); // Enable JSON parsing
 app.use(opineCors({
-  origin: 'https://deno-onbording-test.deno.dev' // replace with your allowed origin
+  origin: 'https://deno-onbording-test.deno.dev'
 }));
 // Set up routes
 app.post("/send-verification", sendVerification);
