@@ -7,9 +7,14 @@ const port = 3001;
 
 // Enable CORS (for handling cross-origin requests)
 app.use(opineCors({
-  origin: "*", // Set this to a specific origin in production
+  origin: "*", // Change this to your frontend origin in production
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 204,
 }));
+
+app.options("/send-verification", (req, res) => {
+  res.status(204).end();
+});
 
 // Serve static files (like index.html)
 app.use(serveStatic(Deno.cwd()));
