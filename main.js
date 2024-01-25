@@ -14,6 +14,7 @@ app.use(serveStatic(Deno.cwd()));
 // Handle POST requests for sending verification
 app.post("/send-verification", async (req, res) => {
   const { email, code } = req.query;
+  console.log(email, code);
   try {
     const result = await mailer(email, code);
     res.json({ email, code });
