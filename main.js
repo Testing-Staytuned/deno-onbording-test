@@ -6,7 +6,10 @@ const app = opine();
 const port = 3001;
 
 // Enable CORS (for handling cross-origin requests)
-app.use(opineCors());
+app.use(opineCors({
+  origin: "*", // Set this to a specific origin in production
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+}));
 
 // Serve static files (like index.html)
 app.use(serveStatic(Deno.cwd()));
