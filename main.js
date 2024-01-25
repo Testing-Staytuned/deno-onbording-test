@@ -3,7 +3,7 @@ import { opineCors } from "https://deno.land/x/cors/mod.ts";
 import mailer from "./mailer.js";
 
 const app = opine();
-const port = 3000;
+const port = 3001;
 
 // Enable CORS (for handling cross-origin requests)
 app.use(opineCors());

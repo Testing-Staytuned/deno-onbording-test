@@ -83,7 +83,7 @@ button:hover {
   const verificationCode = generateVerificationCode();
 
   try {
-    const response = await fetch(`http://localhost:3000/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
+    const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
     const result = await response.json();
 
     if (response.ok) {
