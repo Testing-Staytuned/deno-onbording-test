@@ -79,19 +79,24 @@ button:hover {
     }
 
     async function sendVerificationcode() {
-      const email = document.getElementById('email').value;
-      const response = await fetch(`http://localhost:3000/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
-        const result = await response.json();
+  const email = document.getElementById('email').value;
+  const verificationCode = generateVerificationCode();
 
-        if (response.ok) {
-            // const resultContainer = document.createElement('div');
-            // resultContainer.innerHTML = `<p>Email: ${result.email}</p><p>Verification Code: ${result.code}</p>`;
-            // document.body.appendChild(resultContainer);
-            alert('code sent!');
-          } else {
-            alert('Error sending verification: ' + result.error);
-          }
+  try {
+    const response = await fetch(`http://localhost:3000/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
+    const result = await response.json();
+
+    if (response.ok) {
+      alert('Code sent!');
+      document.getElementById('formContainer2').style.display = 'block';
+    } else {
+      alert('Error sending verification: ' + result.error);
     }
+  } catch (error) {
+    console.error('Fetch error:', error);
+    alert('Failed to fetch. Check console for details.');
+  }
+}
     
     async function submitVerification() {
       const email = document.getElementById('email').value;

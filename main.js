@@ -1,6 +1,6 @@
 import { opine, serveStatic } from "https://deno.land/x/opine/mod.ts";
 import { opineCors } from "https://deno.land/x/cors/mod.ts";
-import mailer from "./b.js";
+import mailer from "./mailer.js";
 
 const app = opine();
 const port = 3000;
