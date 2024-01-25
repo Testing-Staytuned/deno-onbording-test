@@ -1,5 +1,5 @@
 import { opine, serveStatic } from "https://deno.land/x/opine/mod.ts";
-import { opineCors } from "https://deno.land/x/cors/mod.ts";
+// import { opineCors } from "https://deno.land/x/cors/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import mailer from "./mailer.js";
@@ -9,7 +9,7 @@ const port = 3001;
 
 // Enable CORS (for handling cross-origin requests)
 app.use(opineCors());
-app.use(oakCors());
+// app.use(oakCors());
 // Serve static files (like index.html)
 app.use(serveStatic(Deno.cwd()));
 
