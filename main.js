@@ -7,11 +7,12 @@ const app = opine();
 
 // Set up middleware
 app.use(serveStatic(Deno.cwd())); // Serve static files
-app.use(opineCors()); // Enable CORS
-// app.use(json()); // Enable JSON parsing
+
+// Enable CORS and allow only specific origin
 app.use(opineCors({
   origin: 'https://deno-onbording-test.deno.dev'
 }));
+
 // Set up routes
 app.post("/send-verification", sendVerification);
 
