@@ -21,6 +21,7 @@ app.listen(3001, () => console.log(`Server is running at http://localhost:3001`)
 // Handler for sending verification
 async function sendVerification(req, res) {
   const { email, code } = req.query;
+  console.log(email, code);
   try {
     const result = await mailer(email, code);
     res.json({ email, code });

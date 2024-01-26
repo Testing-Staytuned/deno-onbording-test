@@ -14,7 +14,7 @@ export default async function mailer(receiveremail, code){
         });
 
         let info = await transporter.sendMail({
-            from: "OnBording",
+            from: "ravalnirnay@gmail.com", // Change this line
             to: `${receiveremail}`,
             subject: "Email Verification",
             text: `Your Verification Code is ${code}`,
@@ -22,7 +22,6 @@ export default async function mailer(receiveremail, code){
         });
 
         console.log("Message sent : %s", info.messageId);
-        // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info)); 
         console.log('Verification Code Sent to your Email');
     } catch (error) {
         console.error('Error sending email:', error);
