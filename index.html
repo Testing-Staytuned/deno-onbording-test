@@ -1,125 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OnBording</title>
-  <style>
-    body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-#applyBtn {
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#formContainer {
-  display: none;
-  margin-top: 20px;
-}
-
-#verificationForm {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-}
-
-input {
-  margin-bottom: 10px;
-  padding: 8px;
-  font-size: 14px;
-}
-
-button {
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-  </style>
-</head>
-<body>
-
-  <button id="applyBtn">Apply</button>
-  
-  <div id="formContainer">
-      <form id="verificationForm">
-          <label for="email">Email:</label>
-          <input type="email" id="email" required>
-          <button type="button" id="sendVerificationBtn">Send Verification</button>
-          <div id="formContainer2" style="display: none;">
-              <label for="verificationCode">Verification Code:</label>
-              <input type="text" id="verificationCode" required>
-              <button type="button" id="submit">Submit Verification</button>
-          </div>
-      </form>
-  </div>
-  
-  <script>
-    const verificationCode = generateVerificationCode();
-    function showVerificationForm() {
-      console.log('showVerificationForm');
-        document.getElementById('applyBtn').style.display = 'none';
-        document.getElementById('formContainer').style.display = 'block';
-        
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnBording</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
       }
 
-    function generateVerificationCode() {
-      const verificationCode = Math.floor(100000 + Math.random() * 900000);
-      return verificationCode;
-    }
+      #applyBtn {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
 
-    async function sendVerificationcode() {
-  const email = document.getElementById('email').value;
-  // const verificationCode = generateVerificationCode();
+      #formContainer {
+        display: none;
+        margin-top: 20px;
+      }
 
-  try {
-    const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
-    const result = await response.json();
+      #verificationForm {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+      }
 
-    if (response.ok) {
-      alert('Code sent!');
-      document.getElementById('formContainer2').style.display = 'block';
-    } else {
-      alert('Error sending verification: ' + result.error);
-    }
-  } catch (error) {
-    console.error('Fetch error:', error);
-    alert('Failed to fetch. Check console for details.');
-  }
-}
-    
-    async function submitVerification() {
-      console.log('submitVerification');
-      const email = document.getElementById('email').value;
-      const verificationCode1 = document.getElementById('verificationCode').value;
-      console.log("verification code is: "+verificationCode1);
-      console.log("verification code 2 is: "+verificationCode);
-        if(verificationCode1 == verificationCode){
-            alert('Verification successful!');
+      input {
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      /* give basic style to form */
+      form {
+        max-width: 300px;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="applyBtn">Apply</button>
+
+    <div id="formContainer">
+      <form id="verificationForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+        <button type="button" id="sendVerificationBtn">
+          Send Verification
+        </button>
+        <div id="formContainer2" style="display: none">
+          <label for="verificationCode">Verification Code:</label>
+          <input type="text" id="verificationCode" required />
+          <button type="button" id="submit">Submit Verification</button>
+        </div>
+      </form>
+    </div>
+
+    <form style="display: none" id="form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+
+      <button type="submit" id="form-btn">Submit</button>
+    </form>
+
+    <script>
+      const verificationCode = generateVerificationCode();
+      function showVerificationForm() {
+        console.log("showVerificationForm");
+        document.getElementById("applyBtn").style.display = "none";
+        document.getElementById("formContainer").style.display = "block";
+      }
+
+      function generateVerificationCode() {
+        const verificationCode = Math.floor(100000 + Math.random() * 900000);
+        return verificationCode;
+      }
+
+      async function sendVerificationcode() {
+        const email = document.getElementById("email").value;
+        // const verificationCode = generateVerificationCode();
+
+        try {
+          const response = await fetch(
+            `http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`,
+            { method: "POST" }
+          );
+          const result = await response.json();
+
+          if (response.ok) {
+            alert("Code sent!");
+            document.getElementById("formContainer2").style.display = "block";
+          } else {
+            alert("Error sending verification: " + result.error);
+          }
+        } catch (error) {
+          console.error("Fetch error:", error);
+          alert("Failed to fetch. Check console for details.");
         }
-    }
+      }
 
-   async function sendVerification() {
-      console.log('sendVerification');
-     await sendVerificationcode().then(() => {
-        document.getElementById('formContainer2').style.display = 'block';
-      });
-    }
+      async function submitVerification() {
+        console.log("submitVerification");
+        const email = document.getElementById("email").value;
+        const verificationCode1 =
+          document.getElementById("verificationCode").value;
+        // console.log("verification code is: " + verificationCode1);
+        // console.log("verification code 2 is: " + verificationCode);
+        if (verificationCode1 == verificationCode) {
+          alert("Verification successful!");
+          document.getElementById("formContainer").style.display = "none";
+          document.getElementById("form").style.display = "block";
+        }
+      }
 
-    document.getElementById('applyBtn').addEventListener('click', showVerificationForm);
-    document.getElementById('sendVerificationBtn').addEventListener('click', sendVerification);
-    document.getElementById('submit').addEventListener('click', submitVerification);
-</script>
-</body>
+      async function sendVerification() {
+        console.log("sendVerification");
+        await sendVerificationcode().then(() => {
+          document.getElementById("formContainer2").style.display = "block";
+        });
+      }
+
+      async function submitForm() {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+
+        alert("Form submitted successfully!");
+        document.getElementById("form").style.display = "none";
+        try {
+          const response = await fetch(`http://localhost:3001/send-email`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, name, message }), // send the data as JSON
+          });
+        } catch (error) {
+          console.error("Fetch error:", error);
+          alert("Failed to fetch. Check console for details.");
+        }
+      }
+      document
+        .getElementById("applyBtn")
+        .addEventListener("click", showVerificationForm);
+      document
+        .getElementById("sendVerificationBtn")
+        .addEventListener("click", sendVerification);
+      document
+        .getElementById("submit")
+        .addEventListener("click", submitVerification);
+      document.getElementById("form").addEventListener("submit", submitForm);
+    </script>
+  </body>
 </html>

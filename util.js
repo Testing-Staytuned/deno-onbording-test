@@ -1,43 +1,32 @@
-// main.js
-
-export function generateVerificationCode() {
-    const verificationCode = Math.floor(100000 + Math.random() * 900000);
-    return verificationCode;
-  }
-  
-  export async function sendVerificationcode() {
-    const email = document.getElementById('email').value;
-    const verificationCode = generateVerificationCode();
-  
-    try {
-      const response = await fetch(`http://localhost:3000/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
-      const result = await response.json();
-  
-      if (response.ok) {
-        alert('Code sent!');
-        document.getElementById('formContainer2').style.display = 'block';
-      } else {
-        alert('Error sending verification: ' + result.error);
+// require('dotenv').config();
+// const tokn = process.env.MY_VARIABLE;
+// const tokn = "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";
+// console.log(tokn);
+export default async function createIssue(title, body) {
+  const owner = "Testing-Staytuned";
+  const repo = "deno-onbording-test";
+  // const title = 'Issue created from Deno';
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/issues`,
+      {
+        method: "POST",
+        headers: {
+          // 'Authorization': `token ${tokn}`,
+          Authorization: `Bearer ${tokn}`,
+          // 'Accept': 'application/vnd.github.v3+json',
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          body,
+        }),
       }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      alert('Failed to fetch. Check console for details.');
-    }
+    );
+
+    const data = await response.json();
+    console.log("Issue created:", data.html_url);
+  } catch (error) {
+    console.error("Error creating issue:", error.message);
   }
-  
-  export function submitVerification() {
-    const email = document.getElementById('email').value;
-    const verificationCode1 = document.getElementById('verificationCode').value;
-  
-    if (verificationCode1 == verificationCode) {
-      alert('Verification successful!');
-    } else {
-      alert('Verification failed!');
-    }
-  }
-  
-  export function showVerificationForm() {
-    document.getElementById('applyBtn').style.display = 'none';
-    document.getElementById('formContainer').style.display = 'block';
-  }
-  
+}
