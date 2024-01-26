@@ -79,25 +79,26 @@ button:hover {
       return verificationCode;
     }
 
-    async function sendVerificationcode() {
-  const email = document.getElementById('email').value;
-  // const verificationCode = generateVerificationCode();
+      async function sendVerificationcode() {
+        const email = document.getElementById('email').value;
+        // const verificationCode = generateVerificationCode();
 
-  // try {
-    const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
-    const result = await response.json();
+        try {
+          const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
+          const result = await response.json();
 
-    if (response.ok) {
-      alert('Code sent!');
-      document.getElementById('formContainer2').style.display = 'block';
-    } else {
-      alert('Error sending verification: ' + result.error);
-    }
-  // } catch (error) {
-  //   console.error('Fetch error:', error);
-  //   alert('Failed to fetch. Check console for details.');
-  // }
-}
+          if (response.ok) {
+            alert('Code sent!');
+            document.getElementById('formContainer2').style.display = 'block';
+          } else {
+            alert('Error sending verification: ' + result.error);
+          }
+        } catch (error) {
+          console.error('Fetch error:', error);
+          alert('Failed to fetch. Check console for details.');
+        }
+      }
+
     
     async function submitVerification() {
       console.log('submitVerification');
