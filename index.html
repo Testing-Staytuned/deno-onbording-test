@@ -110,9 +110,9 @@ button:hover {
         }
     }
 
-    function sendVerification() {
+   async function sendVerification() {
       console.log('sendVerification');
-      sendVerificationcode().then(() => {
+      await sendVerificationcode().then(() => {
         document.getElementById('formContainer2').style.display = 'block';
       });
     }
