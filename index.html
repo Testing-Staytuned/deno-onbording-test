@@ -83,7 +83,7 @@ button:hover {
   const email = document.getElementById('email').value;
   // const verificationCode = generateVerificationCode();
 
-  try {
+  // try {
     const response = await fetch(`http://localhost:3001/send-verification?email=${email}&code=${verificationCode}`, { method: 'POST' });
     const result = await response.json();
 
@@ -93,10 +93,10 @@ button:hover {
     } else {
       alert('Error sending verification: ' + result.error);
     }
-  } catch (error) {
-    console.error('Fetch error:', error);
-    alert('Failed to fetch. Check console for details.');
-  }
+  // } catch (error) {
+  //   console.error('Fetch error:', error);
+  //   alert('Failed to fetch. Check console for details.');
+  // }
 }
     
     async function submitVerification() {
