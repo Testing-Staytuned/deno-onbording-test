@@ -467,8 +467,8 @@ async function appendToIssueDescription( additionalContent) {
     const response = await fetch(apiUrl, {
       method: 'PATCH',
       headers: {
-        // 'Authorization': `Bearer ${token}`,
-        Authorization: `token ${tokn}`,
+        'Authorization': `Bearer ${token}`,
+        // Authorization: `token ${tokn}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
