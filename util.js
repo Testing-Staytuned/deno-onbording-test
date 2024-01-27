@@ -3,6 +3,7 @@ import { config } from "https://deno.land/x/dotenv/mod.ts";
 const env = config();
 const tokn = env.GITHUB_TOKEN;
 
+
 // console.log(tokn);
 async function createIssue(title, body) {
   const owner = "Testing-Staytuned";
@@ -243,6 +244,53 @@ async function getAllProjectColumnValue(projectId) {
 }
 
 // getAllProjectColumnValue('PVT_kwDOCWJ_tM4Abm8s');
+async function getOneProjectColumnValue(projectId, fieldId) {
+  const token = tokn;
+  const query = `
+  query{
+    node(id: "${projectId}") {
+      ... on ProjectV2 {
+        fields(first: 20) {
+          nodes {
+            ...on ProjectV2Field {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ query: query }),
+  });
+
+  const data = await response.json();
+  if (data.errors) {
+    console.error(data.errors);
+    throw new Error("Failed to add issue to project");
+  }
+  // get the response
+  console.log(data.data);
+  // console.log(data.data.node.items.nodes.length);
+  // for (let i = 0; i < data.data.node.items.nodes.length; i++) {
+  //   if (data.data.node.items.nodes[i].content.id == issueid) {
+      // console.log(data.data.node.items.nodes[i].email);
+      // return i;
+    // }
+  // }
+}
+
+// getOneProjectColumnValue('PVT_kwDOCWJ_tM4Abm8s','PVTF_lADOCWJ_tM4Abm8szgRyoBg');
+
 
 async function returnindexofissue(projectId, issueid) {
   const token = tokn;
@@ -250,7 +298,7 @@ async function returnindexofissue(projectId, issueid) {
   query{
     node(id: "${projectId}") {
       ... on ProjectV2 {
-        items(last: 20) {
+        items(first: 20) {
           nodes {
             ... on ProjectV2Item {
               id
@@ -285,17 +333,17 @@ async function returnindexofissue(projectId, issueid) {
     throw new Error("Failed to add issue to project");
   }
   // get the response
-  // console.log(data.data);
+  console.log(data.data.node.items.nodes);
   // console.log(data.data.node.items.nodes.length);
   for (let i = 0; i < data.data.node.items.nodes.length; i++) {
     if (data.data.node.items.nodes[i].content.id == issueid) {
-      // console.log(i);
+      // console.log(data.data.node.items.nodes[i].email);
       return i;
     }
   }
 }
 
-// returnindexofissue('PVT_kwDOCWJ_tM4Abm8s','I_kwDOLIkKI859RQip')
+// returnindexofissue('PVT_kwDOCWJ_tM4Abm8s','I_kwDOLJ6B0s59YB7Y')
 // .then(a => console.log(a));
 
 
@@ -370,9 +418,7 @@ async function fetchGitHubUser(username) {
   }
 }
 
-// Example usage:
-// const username = 'octocat'; // Replace 'octocat' with any GitHub username
-// fetchGitHubUser(username)
+// fetchGitHubUser('username')
 //   .then(userData => {
 //     if (userData) {
 //       console.log('User data:', userData);
@@ -381,6 +427,91 @@ async function fetchGitHubUser(username) {
 //       console.log('User data not available.');
 //     }
 //   });
+
+async function searchUsersByEmail(email) {
+  const token = tokn;
+  const apiUrl = `https://api.github.com/search/users?q=${email}+in:email`;
+
+  const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+      }
+  });
+
+  if (!response.ok) {
+      throw new Error(`Failed to search users: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  console.log(data);
+  return data.items; // Returns an array of user objects matching the email query
+}
+
+// searchUsersByEmail('nirnay01')
+async function appendToIssueDescription( additionalContent) {
+  const owner = "Testing-Staytuned";
+  const repo = "onbording_member";
+  const issueNumber = "45";
+  const token = tokn;
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`;
+
+  const existingDescription = await fetchCurrentDescription(owner, repo, issueNumber, token); // Fetch existing description
+
+  const payload = {
+    body: existingDescription + additionalContent // Append to existing content
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to append content to issue description: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    // console.log('Issue description updated successfully:', responseData); // Log success for clarity
+    console.log('Issue description updated successfully');
+    return responseData;
+  } catch (error) {
+    console.error('Error updating issue description:', error);
+    throw error;
+  }
+}
+
+async function fetchCurrentDescription(owner, repo, issueNumber, token) {
+  
+  const descriptionUrl = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`;
+  try {
+    const descriptionResponse = await fetch(descriptionUrl, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!descriptionResponse.ok) {
+      throw new Error(`Failed to fetch issue description: ${descriptionResponse.statusText}`);
+    }
+
+    const issueData = await descriptionResponse.json();
+    return issueData.body;
+  } catch (error) {
+    throw new Error(`Failed to fetch issue description: ${error.message}`);
+  }
+}
+
+// appendToIssueDescription('- [ ] Added a new task\n');
+
+
+
 
 
 export default {
@@ -394,4 +525,6 @@ export default {
   linkProjectToTeam,
   addteammember,
   fetchGitHubUser,
+  searchUsersByEmail,
+  appendToIssueDescription,
 };

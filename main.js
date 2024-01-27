@@ -14,7 +14,9 @@ const {
   // returnindexofissue,
   // linkProjectToTeam,
   // addteammember,
-  fetchGitHubUser,
+  // fetchGitHubUser,
+  // searchUsersByEmail,
+  appendToIssueDescription,
 } = util;
 
 // Create a new Opine application
@@ -83,10 +85,10 @@ async function sendemail(req, res) {
 async function webhook(payload) {
   if (payload.issue.state === "open") {
     // console.log("Received GitHub webhook payload:", payload.comment.body);
-    // if (payload.comment.body === "start-coding"){
+    if (payload.comment.body === "send"){
       console.log("Received GitHub webhook payload:", payload.comment.body);
-      const id = payload.issue.node_id;
+      const id = payload.issue.html_url.split("/").pop();
       console.log("id:", id);
-    // }
+    }
   }
 }
