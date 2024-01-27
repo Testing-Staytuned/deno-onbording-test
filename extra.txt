@@ -1,0 +1,227 @@
+
+// // Example usage
+// addIssueToProject(tokn)
+//   .then(() => console.log("Issue added to project"))
+//   .catch((error) => console.error("Error adding issue to project:", error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //get the project id
+
+
+// addIssueToProject(tokn, repositoryId, projectID, issueTitle, issueBody)
+//   .catch((error) => console.error("Error adding issue to project:", error));
+
+async function fetchProjects(token) {
+  const query = `
+  query {
+    organization(login: "Testing-Staytuned") {
+      projectsV2(first: 10) {
+        nodes {
+          id
+          number
+        }
+      }
+    }
+  }   
+`;
+
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query: query })
+  });
+
+  const { data, errors } = await response.json();
+  if (errors) {
+    console.error('GraphQL request failed:', errors);
+    return;
+  }
+
+  return data.organization.projects.nodes;
+}
+// Example usage
+const token = tokn;
+const orgName = "Testing-Staytuned";
+
+// fetchProjects(token)
+//   .then((projects) => {
+//     console.log("Projects:", projects);
+//     // Process the retrieved project data
+//   })
+//   .catch((error) => console.error("Error fetching projects:", error));
+  
+//   async function createProject(token, projectName) {
+//   // Fetch organization id
+//   const orgId = 'O_kgDOCWJ_tA';
+
+//   const query = `
+//   mutation {
+//     createProjectV2(
+//       input: {
+//         ownerId: "${orgId}",
+//         title: "${projectName}",
+//       }
+//     ){
+//       projectV2 {
+//         id
+//       }
+//     }
+//   }
+// `;
+
+//         const response = await fetch("https://api.github.com/graphql", {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ query: query }),
+//   });
+
+//   const { data, errors } = await response.json();
+//   if (errors) {
+//     console.error("GraphQL request failed:", errors);
+//     return;
+//   }
+  
+//   return data.createProject.project;
+// }
+
+// // Example usage
+// const projectName = "NewProject";
+
+// createProject(token, orgName, projectName)
+//   .then((project) => {
+//     console.log("Created project:", project);
+//     // Handle the created project data
+//   })
+//   .catch((error) => console.error("Error creating project:", error));
+
+//   async function getOwnerId(token, orgName) {
+//     const query = `
+//       query {
+//         organization(login: "${orgName}") {
+//           id
+//         }
+//       }
+//     `;
+  
+//     const response = await fetch('https://api.github.com/graphql', {
+//       method: 'POST',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ query: query })
+//     });
+  
+//     const { data, errors } = await response.json();
+//     if (errors) {
+//       console.error('GraphQL request failed:', errors);
+//       return;
+//     }
+  
+//     return data.organization.id;
+//   }
+
+  // Example usage
+// const token = tokn;
+// const orgName = 'Testing-Staytuned';
+
+// getOwnerId(token, orgName)
+//   .then((ownerId) => {
+//     console.log('Owner ID:', ownerId);
+//     // Process the retrieved owner ID
+//   })
+//   .catch((error) => console.error('Error fetching owner ID:', error));
+  
+  // async function fetchProjects(token, orgName) {
+  //   const query = `
+  //   query {
+  //     organization(login: "${orgName}") {
+  //       projectsV2(first: 10) {
+  //         nodes {
+  //           id
+  //           number
+  //         }
+  //       }
+  //     }
+  //   }   
+  // `;
+  
+  //   const response = await fetch('https://api.github.com/graphql', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`,
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ query: query })
+  //   });
+  
+  //   const { data, errors } = await response.json();
+  //   if (errors) {
+  //     console.error('GraphQL request failed:', errors);
+  //     return;
+  //   }
+  
+  //   return data.organization.projects.nodes;
+  // }
+  
+  // // Example usage
+

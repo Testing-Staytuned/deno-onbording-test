@@ -27,3 +27,31 @@ export default async function mailer(receiveremail, code){
         console.error('Error sending email:', error);
     }
 }
+
+export async function mailer_msg(receiveremail){
+    try {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: 'ravalnirnay@gmail.com',
+                pass: 'gpuedbdbtfycfjqx',
+            },
+        });
+
+        let info = await transporter.sendMail({
+            from: "ravalnirnay@gmail.com", // Change this line
+            to: `${receiveremail}`,
+            subject: "Email Verification",
+            text: `Your are Selected`,
+            html: `<b>Your are Selected</b>`
+        });
+
+        console.log("Message sent : %s", info.messageId);
+        console.log('Verification Code Sent to your Email');
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
