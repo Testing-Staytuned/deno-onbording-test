@@ -87,7 +87,7 @@ async function webhook(payload) {
     // console.log("Received GitHub webhook payload:", payload.comment.body);
     if (payload.comment.body === "send"){
       console.log("Received GitHub webhook payload:", payload.comment.body);
-      const id = payload.issue.html_url.split("/").pop();
+      const id = payload.issue.html_url;
       console.log("id:", id);
     }
   }
