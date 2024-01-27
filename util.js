@@ -1,8 +1,7 @@
 // require('dotenv').config();
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 const env = config();
-// const tokn = env.GITHUB_TOKEN;
-const tokn = "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";
+const tokn = env.GITHUB_TOKEN;
 
 
 // console.log(tokn);
@@ -509,7 +508,7 @@ async function fetchCurrentDescription(owner, repo, issueNumber, token) {
   }
 }
 
-appendToIssueDescription('- [ ] Added a new task\n');
+// appendToIssueDescription('- [ ] Added a new task\n');
 
 
 
