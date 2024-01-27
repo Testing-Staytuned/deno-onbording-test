@@ -1,5 +1,7 @@
 // require('dotenv').config();
-const tokn = "ghp_2Y0Z";
+import { config } from "https://deno.land/x/dotenv/mod.ts";
+const env = config();
+const tokn = env.GITHUB_TOKEN;
 
 // console.log(tokn);
 async function createIssue(title, body) {
@@ -353,7 +355,33 @@ async function addteammember(org, team_slug, username){
   .catch((error) => console.error('Error:', error));
 }
 
-addteammember('Testing-Staytuned','Engineering','abhiparate');
+// addteammember('Testing-Staytuned','Engineering','abhiparate');
+async function fetchGitHubUser(username) {
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// const username = 'octocat'; // Replace 'octocat' with any GitHub username
+// fetchGitHubUser(username)
+//   .then(userData => {
+//     if (userData) {
+//       console.log('User data:', userData);
+//       console.log('Username:', userData.login);
+//     } else {
+//       console.log('User data not available.');
+//     }
+//   });
+
 
 export default {
   createIssue,
@@ -363,4 +391,7 @@ export default {
   getAllProjectColumn,
   getAllProjectColumnValue,
   returnindexofissue,
+  linkProjectToTeam,
+  addteammember,
+  fetchGitHubUser,
 };

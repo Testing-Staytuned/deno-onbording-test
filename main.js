@@ -12,6 +12,9 @@ const {
   // getAllProjectColumn,
   // getAllProjectColumnValue,
   // returnindexofissue,
+  // linkProjectToTeam,
+  // addteammember,
+  fetchGitHubUser,
 } = util;
 
 // Create a new Opine application
@@ -82,8 +85,8 @@ async function webhook(payload) {
     // console.log("Received GitHub webhook payload:", payload.comment.body);
     // if (payload.comment.body === "start-coding"){
       console.log("Received GitHub webhook payload:", payload.comment.body);
-      const { email, name, message } = payload.issue;
-      console.log(email, name, message);
+      const id = payload.issue.node_id;
+      console.log("id:", id);
     // }
   }
 }
