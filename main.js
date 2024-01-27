@@ -88,7 +88,10 @@ async function webhook(payload) {
     if (payload.comment.body === "send"){
       console.log("Received GitHub webhook payload:", payload.comment.body);
       const id = payload.issue.html_url;
-      console.log("id:", id);
+      // console.log("id:", id);
+      appendToIssueDescription(id).then(() => {
+        console.log("Done!!!!!!!!!!!!");
+      });
     }
   }
 }
