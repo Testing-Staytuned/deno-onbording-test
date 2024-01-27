@@ -1,5 +1,5 @@
 // require('dotenv').config();
-// const tokn = process.env.MY_VARIABLE;
+const tokn = "ghp_2Y0Z";
 
 // console.log(tokn);
 async function createIssue(title, body) {
