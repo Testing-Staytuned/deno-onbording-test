@@ -79,9 +79,11 @@ async function sendemail(req, res) {
 
 async function webhook(payload) {
   if (payload.issue.state === "open") {
-    console.log("Received GitHub webhook payload:", payload.comment.body);
+    // console.log("Received GitHub webhook payload:", payload.comment.body);
     // if (payload.comment.body === "start-coding"){
-    //   console.log("Received GitHub webhook payload:", payload.comment.body);
+      console.log("Received GitHub webhook payload:", payload.comment.body);
+      const { email, name, message } = payload.issue;
+      console.log(email, name, message);
     // }
   }
 }
