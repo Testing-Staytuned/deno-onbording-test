@@ -87,7 +87,7 @@ async function webhook(payload) {
     console.log("Received GitHub webhook payload:", payload.comment.body);
     const id = payload.issue.html_url;
     console.log("id:", id);
-    appendToIssueDescription('- [ ] ',id).then(() => {
+    appendToIssueDescription('- [ ] '+ id).then(() => {
       console.log("Done!!!!!!!!!!!!");
     });
   }
