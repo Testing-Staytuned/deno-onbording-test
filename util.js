@@ -657,7 +657,7 @@ const issueNumber = '45';
 async function getIssueComments(issueNumber) {
   const owner = "Testing-Staytuned";
   const repo = "onbording_member";
-  const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
+  const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`, {
     headers: {
       Authorization: `Bearer ${tokn}`,
       Accept: "application/vnd.github.v3+json",
@@ -669,7 +669,7 @@ async function getIssueComments(issueNumber) {
   }
 
   const comments = await response.json();
-  console.log("Issue comments:", comments);
+  // console.log("Issue comments:", comments);
   return comments;
 }
 
