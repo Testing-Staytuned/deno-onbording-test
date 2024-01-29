@@ -36,7 +36,8 @@ app.post("/send-verification", sendVerification);
 app.post("/send-email", sendemail);
 app.post("/webhook", (req, res) => {
   const payload = req.body; // Access parsed body with req.body
-  webhook(payload, res);
+  // webhook(payload, res);
+  webhook(payload);
 });
 
 // Start the server
@@ -96,7 +97,8 @@ async function webhook(payload) {
     });
   }
 
-  if( payload.issue.number==45){
+  if( payload.issue){
+    logIssue(payload.issue);
     if (payload.comment.body.includes("selected")) {
       // Extract the number mentioned after "#"
       const regex = /#(\d+)/g;
@@ -109,5 +111,5 @@ async function webhook(payload) {
       }
     }
   }
-  res.json({ success: true });
+  // res.json({ success: true });
 }
