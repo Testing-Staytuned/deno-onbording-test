@@ -36,7 +36,7 @@ app.post("/send-verification", sendVerification);
 app.post("/send-email", sendemail);
 app.post("/webhook", (req, res) => {
   const payload = req.body; // Access parsed body with req.body
-  webhook(payload);
+  webhook(payload, res);
 });
 
 // Start the server
@@ -107,6 +107,7 @@ async function webhook(payload) {
           const number = matches[0].substring(1);
           console.log("comment:"+"selected", number);
       }
+    }
   }
-  }
+  res.json({ success: true });
 }
