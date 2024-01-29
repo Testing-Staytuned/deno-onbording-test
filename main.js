@@ -35,9 +35,9 @@ app.use(
 app.post("/send-verification", sendVerification);
 app.post("/send-email", sendemail);
 app.post("/webhook", (req, res) => {
-  const payload = req.body; // Access parsed body with req.body
+  const body = req.body; // Access parsed body with req.body
   // webhook(payload, res);
-  webhook(payload);
+  webhook(body);
 });
 
 // Start the server
