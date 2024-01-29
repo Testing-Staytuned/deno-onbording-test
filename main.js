@@ -117,7 +117,9 @@ async function webhook(payload) {
                 if (comment.body.includes("Email:")) {
                   const regex = /Email:(.*)/g;
                   const matches = comment.body.match(regex); // Changed from body.match(regex)
+                  console.log("matches:", matches);
                   if (matches && matches.length > 0) {
+                    console.log("matches:", matches);
                     // Extract the number after "#"
                     email = matches[0].substring(7);
                     console.log("email:", email);
