@@ -669,7 +669,7 @@ async function getIssueComments(issueNumber) {
   }
 
   const comments = await response.json();
-  // console.log("Issue comments:", comments);
+  console.log("Issue comments:", comments);
   return comments;
 }
 
