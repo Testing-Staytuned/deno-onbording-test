@@ -109,7 +109,7 @@ async function webhook(payload) {
       if (matches && matches.length > 0) {
           // Extract the number after "#"
           const number = matches[0].substring(1);
-          getIssueComments(number).then((comments) => {
+          const comments=await getIssueComments(number);
             console.log(comments);
             if (comments) {
               let email = "";
@@ -127,7 +127,7 @@ async function webhook(payload) {
                 }
               });
             }
-          });
+         
       }
     }
   }
