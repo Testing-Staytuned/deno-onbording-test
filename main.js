@@ -95,4 +95,18 @@ async function webhook(payload) {
       console.log("Done!!!!!!!!!!!!");
     });
   }
+
+  if( payload.issue.number==45){
+    if (body.includes("selected")) {
+      // Extract the number mentioned after "#"
+      const regex = /#(\d+)/g;
+      const matches = body.match(regex);
+  
+      if (matches && matches.length > 0) {
+          // Extract the number after "#"
+          const number = matches[0].substring(1);
+          console.log("comment:"+"selected", number);
+      }
+  }
+  }
 }
