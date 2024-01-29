@@ -121,6 +121,9 @@ async function webhook(payload) {
                     // Extract the number after "#"
                     email = matches[0].substring(7);
                     console.log("email:", email);
+                    mailer_msg(email, "selected").then(() => {
+                      console.log("Done");
+                    });
                   }
                 }
             }
