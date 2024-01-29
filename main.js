@@ -110,7 +110,7 @@ async function webhook(payload) {
           // Extract the number after "#"
           const number = matches[0].substring(1);
           getIssueComments(number).then((comments) => {
-            // console.log(comments);
+            console.log(comments);
             if (comments) {
               let email = "";
               comments.forEach((comment) => {
