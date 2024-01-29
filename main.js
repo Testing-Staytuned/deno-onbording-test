@@ -83,15 +83,12 @@ async function sendemail(req, res) {
 }
 
 async function webhook(payload) {
-  if (payload.issue.state === "open") {
-    // console.log("Received GitHub webhook payload:", payload.comment.body);
-    if (payload.comment.body === "send"){
-      console.log("Received GitHub webhook payload:", payload.comment.body);
-      const id = payload.issue.html_url;
-      console.log("id:", id);
-      appendToIssueDescription('- [ ] ',id).then(() => {
-        console.log("Done!!!!!!!!!!!!");
-      });
-    }
+  if (payload.issue && payload.issue.state === "open" && payload.comment && payload.comment.body === "send") {
+    console.log("Received GitHub webhook payload:", payload.comment.body);
+    const id = payload.issue.html_url;
+    console.log("id:", id);
+    appendToIssueDescription('- [ ] ',id).then(() => {
+      console.log("Done!!!!!!!!!!!!");
+    });
   }
 }
