@@ -654,7 +654,24 @@ const issueNumber = '45';
   // Run the main function
   // monitorIssueComments();
 
+async function getIssueComments(issueNumber) {
+  const owner = "Testing-Staytuned";
+  const repo = "onbording_member";
+  const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
+    headers: {
+      Authorization: `Bearer ${tokn}`,
+      Accept: "application/vnd.github.v3+json",
+    },
+  });
 
+  if (!response.ok) {
+    throw new Error(`Failed to fetch issue comments: ${response.statusText}`);
+  }
+
+  const comments = await response.json();
+  console.log("Issue comments:", comments);
+  return comments;
+}
 
 export default {
   createIssue,
@@ -669,4 +686,5 @@ export default {
   fetchGitHubUser,
   searchUsersByEmail,
   appendToIssueDescription,
+  getIssueComments
 };

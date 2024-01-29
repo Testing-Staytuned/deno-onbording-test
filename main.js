@@ -1,8 +1,9 @@
 import { opine, serveStatic, json } from "https://deno.land/x/opine/mod.ts";
 import { opineCors } from "https://deno.land/x/cors/mod.ts";
 import mailer from "./mailer.js";
-// import mailer_msg from "./mailer.js";
+import mailer_msg from "./mailer.js";
 import util from "./util.js";
+
 
 const {
   createIssue,
@@ -17,6 +18,7 @@ const {
   // fetchGitHubUser,
   // searchUsersByEmail,
   appendToIssueDescription,
+  getIssueComments,
 } = util;
 
 // Create a new Opine application
@@ -98,7 +100,7 @@ async function webhook(payload) {
   }
 
   if( payload.issue){
-    console.log(payload.issue);
+    // console.log(payload.issue);
     if (payload.comment.body.includes("selected")) {
       // Extract the number mentioned after "#"
       const regex = /#(\d+)/g;
@@ -107,7 +109,23 @@ async function webhook(payload) {
       if (matches && matches.length > 0) {
           // Extract the number after "#"
           const number = matches[0].substring(1);
-          console.log("comment:"+"selected", number);
+          getIssueComments(number).then((comments) => {
+            // console.log(comments);
+            if (comments) {
+              let email = "";
+              comments.forEach((comment) => {
+                if (comment.body.includes("Email:")) {
+                  const regex = /Email:(.*)/g;
+                  const matches = comment.body.match(regex); // Changed from body.match(regex)
+                  if (matches && matches.length > 0) {
+                    // Extract the number after "#"
+                    email = matches[0].substring(7);
+                    console.log("email:", email);
+                  }
+                }
+              });
+            }
+          });
       }
     }
   }
