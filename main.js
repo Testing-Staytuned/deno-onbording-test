@@ -109,7 +109,34 @@ async function webhook(payload) {
       if (matches && matches.length > 0) {
           // Extract the number after "#"
           const number = matches[0].substring(1);
-          getIssueComments(number)
+          getIssueComments(number).then((comments) => {
+            // console.log(comments);
+            if (comments) {
+              let email = "";
+              comments.forEach((comment) => {
+                if (comment.body.includes("Email:")) {
+                  const regex = /Email:(.*)/g;
+                  const matches = comment.body.match(regex); // Changed from body.match(regex)
+                  if (matches && matches.length > 0) {
+                    // Extract the number after "#"
+                    email = matches[0].substring(7);
+                    console.log("email:", email);
+                  }
+                }
+              });
+              if (email) {
+                const regex = /#(\d+)/g;
+                const matches = payload.issue.html_url.match(regex); // Changed from body.match(regex)
+                if (matches && matches.length > 0) {
+                  // Extract the number after "#"
+                  const number = matches[0].substring(1);
+                  UpdateIssueEmailField(number, email).then(() => {
+                    console.log("Done!!!!!!!!!!!!");
+                  });
+                }
+              }
+            }
+          });
       }
     }
   }
