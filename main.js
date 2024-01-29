@@ -98,7 +98,7 @@ async function webhook(payload) {
   }
 
   if( payload.issue){
-    logIssue(payload.issue);
+    console.log(payload.issue);
     if (payload.comment.body.includes("selected")) {
       // Extract the number mentioned after "#"
       const regex = /#(\d+)/g;
