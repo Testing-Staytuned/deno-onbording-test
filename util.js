@@ -3,7 +3,7 @@ import { config } from "https://deno.land/x/dotenv/mod.ts";
 const env = config();
 // const tokn = env.GITHUB_TOKEN;
 const tokn = Deno.env.get("GITHUB_TOKEN");
-console.log(tokn);
+// console.log(tokn);
 
 
 async function createIssue(title, body) {
