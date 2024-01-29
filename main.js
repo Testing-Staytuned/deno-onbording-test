@@ -25,8 +25,7 @@ const app = opine();
 // Set up middleware
 app.use(serveStatic(Deno.cwd())); // Serve static files
 app.use(opineCors()); // Enable CORS
-app.use(json());
-// app.use(json()); // Enable JSON parsing
+app.use(json()); // Enable JSON parsing
 app.use(
   opineCors({
     origin: "https://deno-onbording-test.deno.dev", // replace with your allowed origin
@@ -70,11 +69,11 @@ async function sendemail(req, res) {
       const result2 = await addIssueToProject(result);
       // console.log("result:",result);
       if (result2) {
-        console.log("result2:",result2);
-          UpdateIssueEmailField(result2, email).then(() => {
-            console.log("Done!!!!!!!!!!!!");
-            res.json({ email, name, message });
-          });
+        console.log("result2:", result2);
+        UpdateIssueEmailField(result2, email).then(() => {
+          console.log("Done!!!!!!!!!!!!");
+          res.json({ email, name, message });
+        });
       }
     }
   } catch (error) {
@@ -83,11 +82,16 @@ async function sendemail(req, res) {
 }
 
 async function webhook(payload) {
-  if (payload.issue && payload.issue.state === "open" && payload.comment && payload.comment.body === "send") {
+  if (
+    payload.issue &&
+    payload.issue.state === "open" &&
+    payload.comment &&
+    payload.comment.body === "send"
+  ) {
     console.log("Received GitHub webhook payload:", payload.comment.body);
     const id = payload.issue.html_url;
     console.log("id:", id);
-    appendToIssueDescription('\n- [ ] '+ id).then(() => {
+    appendToIssueDescription("\n- [ ] " + id).then(() => {
       console.log("Done!!!!!!!!!!!!");
     });
   }
