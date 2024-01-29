@@ -2,9 +2,9 @@
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 const env = config();
 const tokn = env.GITHUB_TOKEN;
+console.log(tokn);
 
 
-// console.log(tokn);
 async function createIssue(title, body) {
   const owner = "Testing-Staytuned";
   const repo = "onbording_member";
