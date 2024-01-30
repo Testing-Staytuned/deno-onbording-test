@@ -1,6 +1,5 @@
 import nodemailer from "npm:nodemailer@6.4.17";
-
-export default async function mailer(receiveremail, code) {
+ async function mailer(receiveremail, code) {
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -28,7 +27,7 @@ export default async function mailer(receiveremail, code) {
   }
 }
 
-export async function mailer_msg(receiveremail, msg) {
+ async function mailer_msg(receiveremail, msg) {
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -56,4 +55,5 @@ export async function mailer_msg(receiveremail, msg) {
   }
 }
 
+export default { mailer, mailer_msg };
 // mailer_msg('nirnayraval20@gnu.ac.in', "Hello");

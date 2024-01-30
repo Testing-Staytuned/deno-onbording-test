@@ -288,7 +288,7 @@ async function getOneProjectColumnValue(projectId, fieldId) {
 // getOneProjectColumnValue('PVT_kwDOCWJ_tM4Abm8s','PVTF_lADOCWJ_tM4Abm8szgRyoBg');
 
 
-async function returnindexofissue(projectId, issueid) {
+async function returnItemidofGivenIssue(projectId, issueid) {
   const token = tokn;
   const query = `
   query{
@@ -330,16 +330,14 @@ async function returnindexofissue(projectId, issueid) {
   }
   // get the response
   console.log(data.data.node.items.nodes);
-  // console.log(data.data.node.items.nodes.length);
   for (let i = 0; i < data.data.node.items.nodes.length; i++) {
     if (data.data.node.items.nodes[i].content.id == issueid) {
-      // console.log(data.data.node.items.nodes[i].email);
-      return i;
+      return data.data.node.items.nodes[i].id;
     }
   }
 }
 
-// returnindexofissue('PVT_kwDOCWJ_tM4Abm8s','I_kwDOLJ6B0s59YB7Y')
+// returnItemidofGivenIssue('PVT_kwDOCWJ_tM4Abm8s','I_kwDOLJ6B0s59YB7Y')
 // .then(a => console.log(a));
 
 
@@ -673,11 +671,11 @@ async function getIssueComments(issueNumber) {
   return comments;
 }
 
-async function getOneProjectColumnValue1(projectId,itemId) {
+async function getOneProjectColumnValue1(itemId) {
   const token = tokn;
   const query = `
   query{
-    node(id: "${projectId}") {
+    node(id: "PVT_kwDOCWJ_tM4Abm8s") {
       ... on ProjectV2 {
         items(last: 20) {
           nodes {
@@ -699,7 +697,7 @@ async function getOneProjectColumnValue1(projectId,itemId) {
   `;
   const query1 = `
   query {
-    project: node(id: "${projectId}") {
+    project: node(id: "PVT_kwDOCWJ_tM4Abm8s") {
       ... on ProjectV2 {
         id
         items(last: 20) {
@@ -747,6 +745,28 @@ async function getOneProjectColumnValue1(projectId,itemId) {
 
 // getOneProjectColumnValue1('PVT_kwDOCWJ_tM4Abm8s');
 
+async function getIssueidFromIssueNumber(issueNumber) {
+  const owner = "Testing-Staytuned";
+  const repo = "onbording_member";
+  const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`, {
+    headers: {
+      Authorization: `Bearer ${tokn}`,
+      Accept: "application/vnd.github.v3+json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch issue comments: ${response.statusText}`);
+  }
+
+  const comments = await response.json();
+  // console.log("Issue comments:", comments);
+  console.log(comments.node_id);
+  return comments.node_id;
+}
+
+// getIssueidFromIssueNumber(28);
+
 export default {
   createIssue,
   addIssueToProject,
@@ -754,7 +774,7 @@ export default {
   getAllProject,
   getAllProjectColumn,
   getAllProjectColumnValue,
-  returnindexofissue,
+  returnItemidofGivenIssue,
   linkProjectToTeam,
   addteammember,
   fetchGitHubUser,
@@ -762,4 +782,5 @@ export default {
   appendToIssueDescription,
   getIssueComments,
   getOneProjectColumnValue1,
+  getIssueidFromIssueNumber,
 };

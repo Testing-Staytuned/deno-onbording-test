@@ -4,13 +4,14 @@ import mailer from "./mailer.js";
 import mailer_msg from "./mailer.js";
 import util from "./util.js";
 
-
 const {
   createIssue,
   addIssueToProject,
   UpdateIssueEmailField,
   appendToIssueDescription,
- getOneProjectColumnValue1
+  getOneProjectColumnValue1,
+  returnItemidofGivenIssue,
+  getIssueidFromIssueNumber,
 } = util;
 
 // Create a new Opine application
@@ -91,17 +92,27 @@ async function webhook(payload) {
     });
   }
 
-  if( payload.issue){
+  if (payload.issue) {
     // console.log(payload.issue);
     if (payload.comment.body.includes("selected")) {
       // Extract the number mentioned after "#"
       const regex = /#(\d+)/g;
       const matches = payload.comment.body.match(regex); // Changed from body.match(regex)
-  
+
       if (matches && matches.length > 0) {
-          // Extract the number after "#"
-          const number = matches[0].substring(1);
-          console.log("number:", number);
+        // Extract the number after "#"
+        const number = matches[0].substring(1);
+        getIssueidFromIssueNumber(number).then((issueid) => {
+          console.log("issueid:", issueid);
+          returnItemidofGivenIssue(issueid).then((itemid) => {
+            getOneProjectColumnValue1(itemid). then((email) => {
+              console.log("Email:", email);
+              mailer_msg(email, "Selected").then(() => {
+                console.log("Email sent");
+              });
+            });
+          });
+        });
       }
     }
   }
