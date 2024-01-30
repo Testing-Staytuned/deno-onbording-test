@@ -288,11 +288,11 @@ async function getOneProjectColumnValue(projectId, fieldId) {
 // getOneProjectColumnValue('PVT_kwDOCWJ_tM4Abm8s','PVTF_lADOCWJ_tM4Abm8szgRyoBg');
 
 
-async function returnItemidofGivenIssue(projectId, issueid) {
+async function returnItemidofGivenIssue( issueid) {
   const token = tokn;
   const query = `
   query{
-    node(id: "${projectId}") {
+    node(id: "PVT_kwDOCWJ_tM4Abm8s") {
       ... on ProjectV2 {
         items(first: 20) {
           nodes {
