@@ -7,8 +7,7 @@ import nodemailer from "npm:nodemailer@6.4.17";
       secure: false,
       requireTLS: true,
       auth: {
-        user: "ravalnirnay@gmail.com",
-        pass: "gpuedbdbtfycfjqx",
+      
       },
     });
 
@@ -35,8 +34,6 @@ import nodemailer from "npm:nodemailer@6.4.17";
       secure: false,
       requireTLS: true,
       auth: {
-        user: "ravalnirnay@gmail.com",
-        pass: "gpuedbdbtfycfjqx",
       },
     });
 
@@ -66,8 +63,7 @@ async function main() {
   await client.connectTLS({
     hostname: "smtp.gmail.com",
     port: 465,
-    username: "ravalnirnay@gmail.com",
-    password: "gpuedbdbtfycfjqx",
+   
   });
   
   await client.send({
