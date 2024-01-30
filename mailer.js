@@ -31,7 +31,7 @@ import nodemailer from "npm:nodemailer@6.4.17";
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
+      port: 25,
       secure: false,
       requireTLS: true,
       auth: {
