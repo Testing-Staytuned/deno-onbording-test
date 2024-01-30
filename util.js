@@ -329,7 +329,7 @@ async function returnItemidofGivenIssue(projectId, issueid) {
     throw new Error("Failed to add issue to project");
   }
   // get the response
-  console.log(data.data.node.items.nodes);
+  // console.log(data.data.node.items.nodes);
   for (let i = 0; i < data.data.node.items.nodes.length; i++) {
     if (data.data.node.items.nodes[i].content.id == issueid) {
       return data.data.node.items.nodes[i].id;
