@@ -107,9 +107,9 @@ async function webhook(payload) {
             getOneProjectColumnValue1(itemid). then((email) => {
               console.log("Email:", email);
               main();
-              mailer_msg(email, "Selected").then(() => {
-                console.log("Email sent");
-              });
+              // mailer_msg(email, "Selected").then(() => {
+              //   console.log("Email sent");
+              // });
             });
           });
         });
