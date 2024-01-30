@@ -55,30 +55,30 @@ import nodemailer from "npm:nodemailer@6.4.17";
   }
 }
 
-export { mailer, mailer_msg };
 // mailer_msg('nirnayraval20@gnu.ac.in', "Hello");
 
 
 import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
 async function main() {
-
-const client = new SmtpClient();
-
-await client.connectTLS({
-  hostname: "smtp.gmail.com",
-  port: 465,
-  username: "ravalnirnay@gmail.com",
-  password: "gpuedbdbtfycfjqx",
-});
-
-await client.send({
-  from: "ravalnirnay@gmail.com",
-  to: "nirnayraval20@gnu.ac.in",
-  subject: "Hello from Deno Mailer",
-  content: "Hello from Deno Mailer",
-});
-
-await client.close();
+  
+  const client = new SmtpClient();
+  
+  await client.connectTLS({
+    hostname: "smtp.gmail.com",
+    port: 465,
+    username: "ravalnirnay@gmail.com",
+    password: "gpuedbdbtfycfjqx",
+  });
+  
+  await client.send({
+    from: "ravalnirnay@gmail.com",
+    to: "nirnayraval20@gnu.ac.in",
+    subject: "Hello from Deno Mailer",
+    content: "Hello from Deno Mailer",
+  });
+  
+  await client.close();
+  console.log("Email sent successfully.");
 }
 
-main();
+export { mailer, mailer_msg , main};

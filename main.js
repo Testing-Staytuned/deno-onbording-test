@@ -1,6 +1,6 @@
 import { opine, serveStatic, json } from "https://deno.land/x/opine/mod.ts";
 import { opineCors } from "https://deno.land/x/cors/mod.ts";
-import {mailer,mailer_msg} from "./mailer.js";
+import {mailer,mailer_msg,main} from "./mailer.js";
 import util from "./util.js";
 
 const {
@@ -106,6 +106,7 @@ async function webhook(payload) {
           returnItemidofGivenIssue(issueid).then((itemid) => {
             getOneProjectColumnValue1(itemid). then((email) => {
               console.log("Email:", email);
+              main();
               mailer_msg(email, "Selected").then(() => {
                 console.log("Email sent");
               });
