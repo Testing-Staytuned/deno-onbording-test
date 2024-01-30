@@ -1,7 +1,6 @@
 import { opine, serveStatic, json } from "https://deno.land/x/opine/mod.ts";
 import { opineCors } from "https://deno.land/x/cors/mod.ts";
-import mailer from "./mailer.js";
-import mailer_msg from "./mailer.js";
+import {mailer,mailer_msg} from "./mailer.js";
 import util from "./util.js";
 
 const {

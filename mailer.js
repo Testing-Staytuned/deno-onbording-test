@@ -55,5 +55,5 @@ import nodemailer from "npm:nodemailer@6.4.17";
   }
 }
 
-export default { mailer, mailer_msg };
+export { mailer, mailer_msg };
 // mailer_msg('nirnayraval20@gnu.ac.in', "Hello");
