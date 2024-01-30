@@ -225,3 +225,26 @@ const orgName = "Testing-Staytuned";
   
   // // Example usage
 
+
+
+
+
+getIssueComments(number).then((comments) => {
+          //   // console.log(comments);
+          //   if (comments) {
+          //     let email = "";
+        
+          //       if (comments.body.includes("Email:")) {
+          //         const regex = /Email:(.*)/g;
+          //         const matches = comments.body.match(regex); // Changed from body.match(regex)
+          //         if (matches && matches.length > 0) {
+          //           // Extract the number after "#"
+          //           email = matches[0].substring(7);
+          //           console.log("email:", email);
+          //           mailer_msg(email, "selected").then(() => {
+          //             console.log("Done");
+          //           });
+          //         }
+          //       }
+          //   }
+          // });

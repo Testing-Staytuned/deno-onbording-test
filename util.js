@@ -673,6 +673,80 @@ async function getIssueComments(issueNumber) {
   return comments;
 }
 
+async function getOneProjectColumnValue1(projectId,itemId) {
+  const token = tokn;
+  const query = `
+  query{
+    node(id: "${projectId}") {
+      ... on ProjectV2 {
+        items(last: 20) {
+          nodes {
+            ... on ProjectV2Item {
+              id,
+              fieldValueByName(name:"email") {
+                __typename
+                ... on ProjectV2ItemFieldTextValue {
+                  id
+                  text
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+  const query1 = `
+  query {
+    project: node(id: "${projectId}") {
+      ... on ProjectV2 {
+        id
+        items(last: 20) {
+          nodes {
+            ... on ProjectV2Item {
+              id
+            }
+          }
+        }
+      }
+    }
+    item: node(id: "${itemId}") {
+      ... on ProjectV2Item {
+        id
+        fieldValueByName(name:"email") {
+          __typename
+          ... on ProjectV2ItemFieldTextValue {
+            id
+            text
+          }
+        }
+      }
+    }
+  }
+  `;
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ query: query1 }),
+  });
+
+  const data = await response.json();
+  if (data.errors) {
+    console.error(data.errors);
+    throw new Error("Failed to add issue to project");
+  }
+  // get the response
+  console.log(data.data.item.fieldValueByName.text);
+  return data.data.item.fieldValueByName.text;
+}
+
+// getOneProjectColumnValue1('PVT_kwDOCWJ_tM4Abm8s');
+
 export default {
   createIssue,
   addIssueToProject,
@@ -686,5 +760,6 @@ export default {
   fetchGitHubUser,
   searchUsersByEmail,
   appendToIssueDescription,
-  getIssueComments
+  getIssueComments,
+  getOneProjectColumnValue1,
 };

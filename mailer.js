@@ -55,3 +55,5 @@ export async function mailer_msg(receiveremail, msg) {
     console.error("Error sending email:", error);
   }
 }
+
+// mailer_msg('nirnayraval20@gnu.ac.in', "Hello");

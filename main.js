@@ -9,16 +9,8 @@ const {
   createIssue,
   addIssueToProject,
   UpdateIssueEmailField,
-  // getAllProject,
-  // getAllProjectColumn,
-  // getAllProjectColumnValue,
-  // returnindexofissue,
-  // linkProjectToTeam,
-  // addteammember,
-  // fetchGitHubUser,
-  // searchUsersByEmail,
   appendToIssueDescription,
-  getIssueComments,
+ getOneProjectColumnValue1
 } = util;
 
 // Create a new Opine application
@@ -74,7 +66,7 @@ async function sendemail(req, res) {
       if (result2) {
         console.log("result2:", result2);
         UpdateIssueEmailField(result2, email).then(() => {
-          console.log("Done!!!!!!!!!!!!");
+          console.log("Email set to issue");
           res.json({ email, name, message });
         });
       }
@@ -109,27 +101,8 @@ async function webhook(payload) {
       if (matches && matches.length > 0) {
           // Extract the number after "#"
           const number = matches[0].substring(1);
-          getIssueComments(number).then((comments) => {
-            // console.log(comments);
-            if (comments) {
-              let email = "";
-        
-                if (comments.body.includes("Email:")) {
-                  const regex = /Email:(.*)/g;
-                  const matches = comments.body.match(regex); // Changed from body.match(regex)
-                  if (matches && matches.length > 0) {
-                    // Extract the number after "#"
-                    email = matches[0].substring(7);
-                    console.log("email:", email);
-                    mailer_msg(email, "selected").then(() => {
-                      console.log("Done");
-                    });
-                  }
-                }
-            }
-          });
+          console.log("number:", number);
       }
     }
   }
-  // res.json({ success: true });
 }
